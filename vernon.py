@@ -5,6 +5,8 @@ import base64
 from base64 import b64encode
 from io import BytesIO
 
+
+
 # Initialize session state
 if "theme" not in st.session_state:
     st.session_state.theme = "light"
