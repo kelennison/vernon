@@ -2,12 +2,19 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 from PIL import Image
 import base64
+from base64 import b64encode
 from io import BytesIO
 
+# Path to the favicon image in ICO format
+favicon_path = "C:/Users/USER/OneDrive/Documents/Hello World/Vernon/images/favicon.ico"
 
-st.set_page_config(page_title="Vernon-Novo Group",
-                   page_icon=":tada:", layout="wide")
+# Function to convert image to base64
+def image_to_base64(image_path):
+    with open(image_path, "rb") as f:
+        return f"data:image/x-icon;base64,{b64encode(f.read()).decode('utf-8')}"
 
+# Set page config with favicon
+st.set_page_config(page_title="Vernon-Novo Group", page_icon=image_to_base64(favicon_path), layout="wide")
 
 # Center the image
 def image_to_base64(image):
