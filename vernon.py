@@ -1,31 +1,29 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
 from PIL import Image
+import ctypes
 import base64
 from base64 import b64encode
 from io import BytesIO
 
-
-
-# Initialize session state
-if "theme" not in st.session_state:
-    st.session_state.theme = "light"
-
-
-# Path to the favicon image in ICO format
-favicon_path = "C:/Users/USER/OneDrive/Documents/Hello World/Vernon/images/favicon.ico"
-
 # Function to convert image to base64
-
-
 def image_to_base64(image_path):
     with open(image_path, "rb") as f:
         return f"data:image/x-icon;base64,{b64encode(f.read()).decode('utf-8')}"
 
+# Path to the favicon image in ICO format
+favicon_path = "C:/Users/USER/OneDrive/Documents/Hello World/Vernon/images/favicon.ico"
 
 # Set page config with favicon
 st.set_page_config(page_title="Vernon-Novo Group",
                    page_icon=image_to_base64(favicon_path), layout="wide")
+# Use local CSS
+def local_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+local_css("style/style.css")  # Load your existing CSS file
+
 
 
 # Center the image
@@ -35,20 +33,12 @@ def image_to_base64(image):
     return base64.b64encode(buffered.getvalue()).decode("utf-8")
 
 
-# Use local CSS
-def local_css(file_name):
-    with open(file_name) as f:
-        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-
-
-local_css("style/style.css")
 
 # Load IMAGES
 img_logo_dark = Image.open("images/NOVO-Trans.png")
 img_logo_light = Image.open("images/NOVO LOGO.png")
 img_tanker1 = Image.open("images/tanker.png")
 img_barrel = Image.open("images/oil barrel.png")
-
 
 # Pages of the Website
 def home():
@@ -70,15 +60,7 @@ def about_us():
     petroleum marketing sector, with a dedicated focus on delivering top quality
     petroleum products at the most competitive prices.""")
         with image_column:
-            # Check the current theme
-            theme = st.session_state.theme
-
-            # Display the corresponding image based on the theme
-            if theme == "dark":
-                st.image(img_logo_dark)
-            else:
-                st.image(img_logo_light)
-
+            st.image(img_logo_dark)
 
 def values():
     with st.container():
@@ -174,3 +156,4 @@ if selected == "Services":
     services()
 if selected == "Contact Us":
     contact()
+
