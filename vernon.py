@@ -6,6 +6,16 @@ import base64
 from base64 import b64encode
 from io import BytesIO
 
+
+
+# Initialize session state
+if "theme" not in st.session_state:
+    st.session_state.theme = "light"
+
+
+# Path to the favicon image in ICO format
+favicon_path = "images/favicon.ico"
+
 # Function to convert image to base64
 def image_to_base64(image_path):
     with open(image_path, "rb") as f:
