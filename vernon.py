@@ -13,10 +13,6 @@ def image_to_base64(image_path):
     with open(image_path, "rb") as f:
         return f"data:image/x-icon;base64,{b64encode(f.read()).decode('utf-8')}"
 
-
-# Path to the favicon image in ICO format
-favicon_path = "images/favicon.ico"
-
 # Set page config with favicon
 st.set_page_config(page_title="Vernon-Novo Group",
                    page_icon=image_to_base64(favicon_path), layout="wide")
@@ -46,7 +42,6 @@ img_barrel = Image.open("images/oil barrel.png")
 
 # Pages of the Website
 def home():
-    st.write("---")
     st.markdown(
         f'<div style="text-align: center;"><img src="data:image/png;base64,{image_to_base64(img_tanker1)}" width="1100"></div>',
         unsafe_allow_html=True
