@@ -22,7 +22,7 @@ def image_to_base64(image_path):
         return f"data:image/x-icon;base64,{b64encode(f.read()).decode('utf-8')}"
 
 # Path to the favicon image in ICO format
-favicon_path = "C:/Users/USER/OneDrive/Documents/Hello World/Vernon/images/favicon.ico"
+favicon_path = "images/favicon.ico"
 
 # Set page config with favicon
 st.set_page_config(page_title="Vernon-Novo Group",
