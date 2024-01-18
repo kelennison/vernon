@@ -1,17 +1,9 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
 from PIL import Image
-import ctypes
 import base64
 from base64 import b64encode
 from io import BytesIO
-
-
-
-# Initialize session state
-if "theme" not in st.session_state:
-    st.session_state.theme = "light"
-
 
 # Path to the favicon image in ICO format
 favicon_path = "images/favicon.ico"
@@ -21,27 +13,28 @@ def image_to_base64(image_path):
     with open(image_path, "rb") as f:
         return f"data:image/x-icon;base64,{b64encode(f.read()).decode('utf-8')}"
 
+
 # Path to the favicon image in ICO format
 favicon_path = "C:/Users/USER/OneDrive/Documents/Hello World/Vernon/images/favicon.ico"
 
 # Set page config with favicon
 st.set_page_config(page_title="Vernon-Novo Group",
                    page_icon=image_to_base64(favicon_path), layout="wide")
+
 # Use local CSS
 def local_css(file_name):
     with open(file_name) as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
+
 local_css("style/style.css")  # Load your existing CSS file
 
 
-
-# Center the image
+# Center the image on home page
 def image_to_base64(image):
     buffered = BytesIO()
     image.save(buffered, format="PNG")
     return base64.b64encode(buffered.getvalue()).decode("utf-8")
-
 
 
 # Load IMAGES
@@ -50,8 +43,10 @@ img_logo_light = Image.open("images/NOVO LOGO.png")
 img_tanker1 = Image.open("images/tanker.png")
 img_barrel = Image.open("images/oil barrel.png")
 
+
 # Pages of the Website
 def home():
+    st.write("---")
     st.markdown(
         f'<div style="text-align: center;"><img src="data:image/png;base64,{image_to_base64(img_tanker1)}" width="1100"></div>',
         unsafe_allow_html=True
@@ -71,6 +66,7 @@ def about_us():
     petroleum products at the most competitive prices.""")
         with image_column:
             st.image(img_logo_dark)
+
 
 def values():
     with st.container():
@@ -166,4 +162,3 @@ if selected == "Services":
     services()
 if selected == "Contact Us":
     contact()
-
