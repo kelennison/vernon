@@ -5,8 +5,7 @@ import base64
 from base64 import b64encode
 from io import BytesIO
 
-# Path to the favicon image in ICO format
-favicon_path = "C:/Users/USER/OneDrive/Documents/Hello World/Vernon/images/favicon.ico"
+favicon_path = "images/favicon.ico"
 
 # Function to convert image to base64
 def image_to_base64(image_path):
@@ -15,6 +14,7 @@ def image_to_base64(image_path):
 
 # Set page config with favicon
 st.set_page_config(page_title="Vernon-Novo Group", page_icon=image_to_base64(favicon_path), layout="wide")
+
 
 # Center the image
 def image_to_base64(image):
