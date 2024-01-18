@@ -13,7 +13,7 @@ if "theme" not in st.session_state:
 
 
 # Path to the favicon image in ICO format
-favicon_path = "C:/Users/USER/OneDrive/Documents/Hello World/Vernon/images/favicon.ico"
+favicon_path = "images/favicon.ico"
 
 # Function to convert image to base64
 
