@@ -1,5 +1,6 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
+from time import sleep  # Import the sleep function
 from PIL import Image
 import base64
 from base64 import b64encode
@@ -148,12 +149,17 @@ def streamlit_menu(example=1):
 selected = streamlit_menu(example=EXAMPLE_NO)
 
 if selected == "Home":
+    sleep(1)  # Introduce a 1-second delay
     home()
 if selected == "Who We Are":
+    sleep(1)  # Introduce a 1-second delay
     about_us()
 if selected == "Values":
+    sleep(1)  # Introduce a 1-second delay
     values()
 if selected == "Services":
+    sleep(1)  # Introduce a 1-second delay
     services()
 if selected == "Contact Us":
+    sleep(1)  # Introduce a 1-second delay
     contact()
