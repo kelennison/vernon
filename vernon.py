@@ -1,10 +1,17 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
-from time import sleep  # Import the sleep function
+from time import sleep
 from PIL import Image
 import base64
 from base64 import b64encode
 from io import BytesIO
+import os 
+import pathlib
+import shutil
+import logging
+from bs4 import BeautifulSoup
+
+
 
 # Path to the favicon image in ICO format
 favicon_path = "images/favicon.ico"
@@ -13,6 +20,10 @@ favicon_path = "images/favicon.ico"
 def image_to_base64(image_path):
     with open(image_path, "rb") as f:
         return f"data:image/x-icon;base64,{b64encode(f.read()).decode('utf-8')}"
+
+
+# Path to the favicon image in ICO format
+favicon_path = "images/favicon.ico"
 
 # Set page config with favicon
 st.set_page_config(page_title="Vernon-Novo Group",
@@ -43,6 +54,7 @@ img_barrel = Image.open("images/oil barrel.png")
 
 # Pages of the Website
 def home():
+    st.write("---")
     st.markdown(
         f'<div style="text-align: center;"><img src="data:image/png;base64,{image_to_base64(img_tanker1)}" width="1100"></div>',
         unsafe_allow_html=True
@@ -100,7 +112,7 @@ def contact():
     st.title("Contact Us")
 
     contact_form = """
-    <form action="https://formsubmit.co/novogroupgh@outlook.com" method="POST">
+    <form action="https://formsubmit.co/kelennison@gmail.com" method="POST">
         <input type="hidden" name="_captcha" value="false">
         <input type="text" name="name" placeholder="Your name" required>
         <input type="email" name="email" placeholder="Your email" required>
@@ -163,3 +175,69 @@ if selected == "Services":
 if selected == "Contact Us":
     sleep(1)  # Introduce a 1-second delay
     contact()
+
+
+
+adsense_url = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+GA_AdSense = """
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7885625779726639"
+     crossorigin="anonymous"></script>
+<!-- Square ads -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-7885625779726639"
+     data-ad-slot="3146417758"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    """
+
+ # Insert the script in the head tag of the static template inside your virtual
+index_path = pathlib.Path(st.__file__).parent / "static" / "index.html"
+logging.info(f'editing {index_path}')
+soup = BeautifulSoup(index_path.read_text(), features="html.parser")
+if not soup.find(script, src=adsense_url): 
+    bck_index = index_path.with_suffix('.bck')
+    if bck_index.exists():
+        shutil.copy(bck_index, index_path)  
+    else:
+        shutil.copy(index_path, bck_index)  
+    html = str(soup)
+    new_html = html.replace('<head>', '<head>\n' + GA_AdSense)
+    index_path.write_text(new_html)
+
+
+shortlink =  """
+<script type="text/javascript">//<![CDATA[ 
+(function() {
+    var configuration = {
+    "token": "a1c6282764be55d461d230bc4f50546e",
+    "excludeDomains": [
+        "vernon-novo.onrender.com/"
+    ],
+    "capping": {
+        "limit": 5,
+        "timeout": 24
+    }
+};
+    var script = document.createElement('script');
+    script.async = true;
+    script.src = '//cdn.shorte.st/link-converter.min.js';
+    script.onload = script.onreadystatechange = function () {var rs = this.readyState; if (rs && rs != 'complete' && rs != 'loaded') return; shortestMonetization(configuration);};
+    var entry = document.getElementsByTagName('script')[0];
+    entry.parentNode.insertBefore(script, entry);
+})();
+//]]></script>  
+"""
+# Path to the index.html file
+a = os.path.dirname(st.__file__) + '/static/index.html'
+
+with open(a, 'r') as f:
+    data = f.read()
+    if len(re.findall('G-', data)) == 0:
+        with open(a, 'w') as ff:
+            # Append the additional script to the head section
+            newdata = re.sub('<head>', '<head>' + shortlink, data)
+            ff.write(newdata)
