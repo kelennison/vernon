@@ -209,27 +209,30 @@ if not soup.find("script", src=adsense_url):
     index_path.write_text(new_html)
 
 
-shortlink =  """
+import streamlit as st
+import streamlit.components.v1 as components
+
+shortlink_script = """
 <script type="text/javascript">//<![CDATA[ 
 (function() {
     var configuration = {
-    "token": "a1c6282764be55d461d230bc4f50546e",
-    "domains": [
-        "yourowndomain.com"
-    ],
-    "capping": {
-        "limit": 5,
-        "timeout": 24
-    },
-    "entryScript": {
-        "type": "timeout",
-        "timeout": 3000,
+        "token": "a1c6282764be55d461d230bc4f50546e",
+        "domains": [
+            "yourowndomain.com"
+        ],
         "capping": {
             "limit": 5,
             "timeout": 24
+        },
+        "entryScript": {
+            "type": "timeout",
+            "timeout": 3000,
+            "capping": {
+                "limit": 5,
+                "timeout": 24
+            }
         }
-    }
-};
+    };
     var script = document.createElement('script');
     script.async = true;
     script.src = '//cdn.shorte.st/link-converter.min.js';
@@ -239,13 +242,45 @@ shortlink =  """
 })();
 //]]></script>
 """
-# Path to the index.html file
-a = os.path.dirname(st.__file__) + '/static/index.html'
 
-with open(a, 'r') as f:
-    data = f.read()
-    if len(re.findall('G-', data)) == 0:
-        with open(a, 'w') as ff:
-            # Append the additional script to the head section
-            newdata = re.sub('<head>', '<head>' + shortlink, data)
-            ff.write(newdata)
+# Bootstrap 4 collapse example with the added JavaScript
+html_string = f"""
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<div id="accordion">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h5 class="mb-0">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        Collapsible Group Item #1
+        </button>
+      </h5>
+    </div>
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+      <div class="card-body">
+        Collapsible Group Item #1 content
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        Collapsible Group Item #2
+        </button>
+      </h5>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+      <div class="card-body">
+        Collapsible Group Item #2 content
+      </div>
+    </div>
+  </div>
+</div>
+{shortlink_script}
+"""
+
+# Display the HTML string with the added JavaScript
+components.html(html_string, height=600)
+
