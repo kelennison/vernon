@@ -10,7 +10,7 @@ import pathlib
 import shutil
 import logging
 from bs4 import BeautifulSoup
-
+import re
 
 
 # Path to the favicon image in ICO format
