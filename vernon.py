@@ -214,7 +214,7 @@ shortlink =  """
 (function() {
     var configuration = {
     "token": "a1c6282764be55d461d230bc4f50546e",
-    "excludeDomains": [
+    "domains": [
         "yourowndomain.com"
     ],
     "capping": {
@@ -222,7 +222,8 @@ shortlink =  """
         "timeout": 24
     },
     "entryScript": {
-        "type": "click",
+        "type": "timeout",
+        "timeout": 3000,
         "capping": {
             "limit": 5,
             "timeout": 24
@@ -236,7 +237,7 @@ shortlink =  """
     var entry = document.getElementsByTagName('script')[0];
     entry.parentNode.insertBefore(script, entry);
 })();
-//]]></script> 
+//]]></script>
 """
 # Path to the index.html file
 a = os.path.dirname(st.__file__) + '/static/index.html'
