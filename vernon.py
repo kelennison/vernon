@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit.components.v1 as components
 from streamlit_option_menu import option_menu
 from time import sleep
 from PIL import Image
@@ -209,28 +210,19 @@ if not soup.find("script", src=adsense_url):
     index_path.write_text(new_html)
 
 
-import streamlit as st
-import streamlit.components.v1 as components
 
-shortlink_script = """
+
+second_script = """
 <script type="text/javascript">//<![CDATA[ 
 (function() {
     var configuration = {
         "token": "a1c6282764be55d461d230bc4f50546e",
-        "domains": [
+        "excludeDomains": [
             "yourowndomain.com"
         ],
         "capping": {
             "limit": 5,
             "timeout": 24
-        },
-        "entryScript": {
-            "type": "timeout",
-            "timeout": 3000,
-            "capping": {
-                "limit": 5,
-                "timeout": 24
-            }
         }
     };
     var script = document.createElement('script');
@@ -243,7 +235,7 @@ shortlink_script = """
 //]]></script>
 """
 
-# Bootstrap 4 collapse example with the added JavaScript
+# Bootstrap 4 collapse example with both JavaScript snippets
 html_string = f"""
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -278,9 +270,10 @@ html_string = f"""
     </div>
   </div>
 </div>
-{shortlink_script}
+{second_script}
 """
 
-# Display the HTML string with the added JavaScript
+# Display the HTML string with both JavaScript snippets
 components.html(html_string, height=600)
+
 
