@@ -215,11 +215,18 @@ shortlink =  """
     var configuration = {
     "token": "a1c6282764be55d461d230bc4f50546e",
     "excludeDomains": [
-        "vernon-novo.onrender.com/"
+        "yourowndomain.com"
     ],
     "capping": {
         "limit": 5,
         "timeout": 24
+    },
+    "entryScript": {
+        "type": "click",
+        "capping": {
+            "limit": 5,
+            "timeout": 24
+        }
     }
 };
     var script = document.createElement('script');
@@ -229,7 +236,7 @@ shortlink =  """
     var entry = document.getElementsByTagName('script')[0];
     entry.parentNode.insertBefore(script, entry);
 })();
-//]]></script>  
+//]]></script> 
 """
 # Path to the index.html file
 a = os.path.dirname(st.__file__) + '/static/index.html'
